@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Lab 12 : Harry Potter Add Spells | Jessica Walker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="./add-spell.js"></script>
+
+</head>
+
+<body data-ng-app="addSpellsApp" data-ng-controller="addSpellsController">
+
+    <div>
+        <div>
+            <label for="name">Spell Name: </label>
+            <input id="name" data-ng-model="name">
+        </div>
+        <div>
+            <label for="type">Type: </label>
+            <input id="type" data-ng-model="type">
+        </div>
+        <div>
+            <label for="effect">Effect: </label>
+            <input id="effect" data-ng-model="effect">
+        </div>
+        <div>
+            <label for="counter-spell">Counter Spell: </label>
+            <input id="counter-spell" data-ng-model="counter">
+        </div>
+        <div>
+            <div>
+                <button id="submit" data-ng-click="submitSpell()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="color:green">
+        {{ addResults }}
+    </div>
+
+</body>
+
+</html>

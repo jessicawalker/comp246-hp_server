@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Lab 12 : Harry Potter Spells Table | Jessica Walker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="./spellsTable.js"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 1px;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        tr:nth-child(odd) {
+            background-color: lightgray;
+        }
+
+        tr:nth-child(even) {
+            background-color: white;
+    </style>
+
+</head>
+
+<body data-ng-app="spellsTableApp" data-ng-controller="spellsTableController">
+
+    <div>
+        <table>
+            <tr>
+                <th>Spell Name</th>
+                <th>Type</th>
+                <th>Effect</th>
+                <th>Counter Spell</th>
+            </tr>
+            <tr data-ng-repeat="obj in spells">
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.type }}</td>
+                <td>{{ obj.effect }}</td>
+                <td>{{ obj['counter-spell'] }}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+</html>
