@@ -9,14 +9,14 @@ app.controller("browseSpellsController", function($scope, $http) {
     $scope.get_spells = function() {
         $http({
             method: "GET",
-            url: "https://comp246harrypotter.herokuapp.com/get-spells"
+            //url: "https://comp246harrypotter.herokuapp.com/get-spells"
+            url: "http://localhost:3000/get-spells"
         }).then(function(response) {
-            if(response.data.msg === "SUCCESS") {
+            if (response.data.msg === "SUCCESS") {
                 spells = response.data.spells;
                 $scope.obj = spells[activeSpell];
                 $scope.showHide();
-            }
-            else {
+            } else {
                 $scope.addResults = response.data.msg;
             }
         }, function(response) {
@@ -30,10 +30,10 @@ app.controller("browseSpellsController", function($scope, $http) {
         activeSpell += direction;
         $scope.obj = spells[activeSpell];
         $scope.showHide();
-    }
+    };
 
     $scope.showHide = function() {
         $scope.hidePrev = (activeSpell === 0) ? true : false;
-        $scope.hideNext = (activeSpell === spells.length-1) ? true : false;
+        $scope.hideNext = (activeSpell === spells.length - 1) ? true : false;
     };
 });
