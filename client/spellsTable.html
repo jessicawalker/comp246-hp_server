@@ -12,19 +12,19 @@
             border: 1px solid black;
             padding: 1px;
         }
-        
+
         table {
             margin: auto;
         }
-        
+
         td {
             text-align: center;
         }
-        
+
         tr:nth-child(odd) {
             background-color: lightgray;
         }
-        
+
         tr:nth-child(even) {
             background-color: white;
         }
@@ -32,29 +32,58 @@
 
 </head>
 
-<body data-ng-app="spellsTableApp" data-ng-controller="spellsTableController">
-    <div style="margin: 30px auto; text-align:center;">
-        <label for="groupBy">Spell Type: </label>
-        <select id="groupBy" data-ng-model="selectedType" data-ng-options="type.display for type in types" data-ng-change="redrawTable()"></select>
-    </div>
-    <div>
-        <table>
-            <tr>
-                <th>Spell Name</th>
-                <th>Type</th>
-                <th>Effect</th>
-                <th>Counter Spell</th>
-                <th></th>
-            </tr>
-            <tr data-ng-repeat="obj in spells">
-                <td>{{ obj.name }}</td>
-                <td>{{ obj.type }}</td>
-                <td>{{ obj.effect }}</td>
-                <td>{{ obj['counter-spell'] }}</td>
-                <td><button data-ng-click="deleteSpell(obj.name)">DELETE</button></td>
-            </tr>
-        </table>
-    </div>
+<body data-ng-app="spellsTableApp" data-ng-controller="spellsTableController" data-ng-init="hideForm=true">
+    <section data-ng-hide="hideTable">
+        <div style="margin: 30px auto; text-align:center;">
+            <label for="groupBy">Spell Type: </label>
+            <select id="groupBy" data-ng-model="selectedType" data-ng-options="type.display for type in types"
+                data-ng-change="redrawTable()"></select>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>Spell Name</th>
+                    <th>Type</th>
+                    <th>Effect</th>
+                    <th>Counter Spell</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr data-ng-repeat="obj in spells">
+                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.type }}</td>
+                    <td>{{ obj.effect }}</td>
+                    <td>{{ obj['counter-spell'] }}</td>
+                    <td><button data-ng-click="editSpell($index)">EDIT</button></td>
+                    <td><button data-ng-click="deleteSpell(obj['_id'])">DELETE</button></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section data-ng-hide="hideForm">
+        <div style="font-size: 30px;">
+            <div>
+                <label for="name">Spell Name:</label>
+                <input id="name" data-ng-model="name">
+            </div>
+            <div>
+                <label for="type">Type:</label>
+                <input id="type" data-ng-model="type">
+            </div>
+            <div>
+                <label for="effect">Effect:</label>
+                <input id="effect" data-ng-model="effect">
+            </div>
+            <div>
+                <label for="counter-spell">Counter Spell:</label>
+                <input id="counter-spell" data-ng-model="counter">
+            </div>
+        </div>
+
+        <div><button ng-data-click="updateSpell()">Update</button></div>
+        <div><button ng-data-click="closeForm()">Cancel</button></div>
+    </section>
 
 </body>
 

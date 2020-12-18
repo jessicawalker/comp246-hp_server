@@ -105,7 +105,45 @@ var services = function(app) {
         });
     });
 
-    //app.put();
+    app.put("/update-spell", function(req, res) {
+        var spellID = req.body.spellID;
+        var name = req.body.name;
+        var type = req.body.type;
+        var effect = req.body.effect;
+        var counter = req.body.counterSpell;
+
+        var s_id = new Object(spellID);
+
+        var search = {_id: s_id}
+
+        var updateData = {
+            $set: {
+                name: name,
+                type: type,
+                effect: effect,
+                "counter-spell": counter
+            }
+        };
+
+        
+        MongoClient.connect(dbURL, { useUnifiedTopology: true }, function(err, client) {
+            if (err) {
+                return res.status(200).send(JSON.stringify({ msg: "Error: " + err }));
+            } else {
+                var dbo = client.db("harrypotter");
+
+                dbo.collection("spells"), updateOne(search, updateData, function(err) {
+                    if (err) {
+                        client.close();
+                        return res.status(200).send(JSON.stringify({ msg: "Error: " + err }));
+                    } else {
+                        client.close();
+                        return res.status(200).send(JSON.stringify({ msg: "SUCCESS" }));
+                    }
+                });
+            }
+        });
+    });
 };
 
 module.exports = services;

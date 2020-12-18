@@ -1,3 +1,5 @@
+//const { response } = require("express");
+
 var app = angular.module("spellsTableApp", []);
 
 app.controller("spellsTableController", function($scope, $http) {
@@ -47,8 +49,7 @@ app.controller("spellsTableController", function($scope, $http) {
         $http({
             method: "DELETE",
             url: "http://localhost:3000/delete-spell",
-            //url: "https://comp246harrypotter.herokuapp.com/delete-spell",
-            params: { name: spellName }
+            params: { spellID: spellID }
         }).then(function(response) {
             if (response.data.msg === "SUCCESS") {
                 $scope.redrawTable();
@@ -59,6 +60,52 @@ app.controller("spellsTableController", function($scope, $http) {
             console.log(response);
         });
     };
+
+    $scope.editSpell = function(spellNumber) {
+        $scope.name = $scope.spells[spellNumber].name;
+        $scope.type = $scope.spells[spellNumber].type;
+        $scope.effect = $scope.spells[spellNumber].effect;
+        $scope.counter = $scope.spells[spellNumber]['counter-spell'];
+        $scope.spellID = $scope.spells[spellNumber]['_id'];
+
+        $scope.hideTable = true;
+        $scope.hideForm = false;
+    }
+
+    $scope.updateSpell = function(spellNumber) {
+        $http({
+            method: "DELETE",
+            url: "http://localhost:3000/update-spell",
+            data: {
+                spellID: $scope.spellID,
+                name: $scope.name,
+                type: $scope.type,
+                effect: $scope.effect,
+                counterSpell: $scope.counter,
+            }
+        }).then(function(response) {
+            if (response.data.msg === "SUCCESS") {
+                $scope.redrawTable();
+                $scope.closeForm();
+            } else {
+                console.log(response.data.msg);
+            }
+
+        }, function(response) {
+            console.log(response);
+        })
+    }
+
+    $scope.closeForm = function(spellNumber) {
+        $scope.hideForm = true;
+        $scope.hideTable = false;
+
+        $scope.name = "";
+        $scope.type = "";
+        $scope.effect = "";
+        $scope.counter = "";
+
+    }
 });
 
 function getTypes(spellDataArray) {
